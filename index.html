@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#071A2F">
+<meta name="description" content="LIBÉRÉ V2 — parcours personnel, journal, SOS, objectifs et bilan">
+<title>LIBÉRÉ V2</title>
+<style>
+:root{
+ --navy:#071A2F;--navy2:#0D2945;--navy3:#123B5D;
+ --teal:#12B8A6;--teal2:#0B8F82;--gold:#D9A441;
+ --bg:#F4F7FA;--card:#FFF;--text:#172536;--muted:#718096;
+ --line:#E3EAF1;--danger:#D9534F;--success:#159A6B;
+ --shadow:0 16px 45px rgba(7,26,47,.08);--shadow2:0 7px 24px rgba(7,26,47,.06);
+ --r:24px;--rs:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}
+.app{min-height:100vh;padding-bottom:92px}
+.topbar{position:sticky;top:0;z-index:80;background:rgba(7,26,47,.97);color:#fff;padding:13px 15px;box-shadow:0 4px 24px rgba(0,0,0,.13)}
+.topbar-in{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#12B8A6,#087E73);display:grid;place-items:center;font-weight:950;box-shadow:0 7px 20px rgba(18,184,166,.25)}
+.brand b{font-size:17px;letter-spacing:.7px}.brand small{display:block;font-size:9px;opacity:.55;letter-spacing:1px;margin-top:1px}
+.top-actions{display:flex;gap:7px}.icon{width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.09);color:#fff;display:grid;place-items:center;font-size:17px}
+main{width:100%}.page{display:none;max-width:1120px;margin:auto;padding:22px 15px 36px}.page.active{display:block;animation:in .22s ease}@keyframes in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.eyebrow{text-transform:uppercase;letter-spacing:1.7px;font-size:10px;font-weight:900;color:var(--teal2);margin-bottom:5px}
+.title{font-size:28px;line-height:1.12;margin:0;font-weight:950;color:var(--navy)}.subtitle{margin:7px 0 0;color:var(--muted);font-size:13px}
+.hero{position:relative;overflow:hidden;border-radius:30px;padding:24px;background:radial-gradient(circle at 95% 0%,rgba(18,184,166,.27),transparent 32%),linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;box-shadow:var(--shadow);margin-bottom:16px}
+.hero:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-115px;bottom:-145px;border:1px solid rgba(255,255,255,.08)}
+.hero-row{position:relative;display:flex;justify-content:space-between;gap:15px}.hero h1{font-size:27px;line-height:1.1;margin:0 0 7px}.hero p{margin:0;color:rgba(255,255,255,.68);font-size:13px}.avatar{width:54px;height:54px;flex:none;border-radius:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-weight:900}
+.hero-progress{position:relative;display:flex;align-items:center;gap:17px;margin-top:25px}.ring{width:96px;height:96px;position:relative;flex:none}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}.ring circle{fill:none;stroke-width:8}.track{stroke:rgba(255,255,255,.12)}.fill{stroke:var(--teal);stroke-linecap:round;transition:.5s}.ring-value{position:absolute;inset:0;display:grid;place-items:center;font-size:18px;font-weight:950}.hero-progress strong{display:block;font-size:18px}.hero-progress span{display:block;font-size:12px;color:rgba(255,255,255,.63);margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.c12{grid-column:span 12}.c8{grid-column:span 8}.c6{grid-column:span 6}.c4{grid-column:span 4}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow2)}.head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.ct{font-size:16px;font-weight:950;color:var(--navy);margin:0}.cs{font-size:11px;color:var(--muted);margin-top:3px}
+.stat{min-height:116px}.stat-icon{width:40px;height:40px;border-radius:13px;background:#E8F8F5;color:var(--teal2);display:grid;place-items:center;font-size:18px;margin-bottom:10px}.stat-num{font-size:25px;font-weight:950;color:var(--navy)}.stat-label{font-size:11px;color:var(--muted)}
+.section{margin:25px 2px 11px;font-size:17px;font-weight:950;color:var(--navy)}
+.btn{min-height:46px;padding:11px 15px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:900;transition:.15s}.btn:active{transform:scale(.98)}.primary{background:var(--teal);color:#fff;box-shadow:0 8px 20px rgba(18,184,166,.18)}.dark{background:var(--navy);color:#fff}.outline{background:#fff;color:var(--navy);border:1px solid var(--line)}.danger{background:#FFF0EF;color:var(--danger)}.gold{background:#FFF7E6;color:#956B15}.block{width:100%}.small{min-height:37px;padding:8px 11px;font-size:11px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{padding:8px 11px;border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;font-size:11px;font-weight:750}.chip.on{background:#E6F8F5;border-color:#A8E5DD;color:var(--teal2);font-weight:900}
+.field{margin-bottom:14px}.field label{display:block;font-size:11px;font-weight:900;color:var(--navy);margin-bottom:7px}.input,.textarea,.select{width:100%;border:1px solid var(--line);background:#FBFCFD;border-radius:14px;padding:12px 13px;color:var(--text);outline:none}.input:focus,.textarea:focus,.select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(18,184,166,.08)}.textarea{min-height:100px;resize:vertical}
+.quick{display:flex;align-items:center;gap:13px}.quick-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:#F0F6FA;font-size:22px;flex:none}.quick-copy{flex:1}.quick-copy b{font-size:13px}.quick-copy span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.progress{height:9px;border-radius:99px;background:#EAF0F4;overflow:hidden}.progress span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),#43D3C3);transition:.4s}
+.day{margin-bottom:10px}.day-row{display:flex;align-items:flex-start;gap:13px}.day-num{width:44px;height:44px;border-radius:14px;background:#EFF3F6;display:grid;place-items:center;font-weight:950;flex:none;color:var(--navy)}.day.current{border-color:#9ADFD6;box-shadow:0 14px 32px rgba(18,184,166,.10)}.day.current .day-num{background:var(--teal);color:#fff}.day.done .day-num{background:#E4F6EC;color:var(--success)}.day.lock{opacity:.58}.day-info{flex:1}.day-title{font-size:13px;font-weight:950;color:var(--navy)}.day-desc{font-size:11px;color:var(--muted);margin-top:3px}.status{font-size:9px;font-weight:950;text-transform:uppercase;letter-spacing:.8px;margin-top:7px}.s-current{color:var(--teal2)}.s-done{color:var(--success)}.s-lock{color:var(--muted)}
+.sos{border-radius:30px;padding:26px;text-align:center;color:#fff;background:radial-gradient(circle at 80% 0%,rgba(217,164,65,.22),transparent 28%),linear-gradient(135deg,var(--navy),#123B5D);box-shadow:var(--shadow)}.orb{width:118px;height:118px;margin:7px auto 17px;border-radius:50%;display:grid;place-items:center;background:rgba(18,184,166,.08);box-shadow:0 0 0 14px rgba(18,184,166,.035),0 0 0 28px rgba(18,184,166,.02)}.orb span{width:78px;height:78px;border-radius:50%;background:var(--teal);display:grid;place-items:center;font-size:28px}.timer{font-size:45px;font-weight:950;letter-spacing:1px}.sos p{max-width:500px;margin:5px auto 20px;color:rgba(255,255,255,.7);font-size:13px}
+.rating-row{display:flex;gap:7px}.rating{flex:1;min-height:43px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-weight:900}.rating.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.item{padding:15px;border:1px solid var(--line);border-radius:17px;background:#fff;margin-bottom:9px}.item-top{display:flex;justify-content:space-between;gap:8px}.item b{font-size:12px}.date{font-size:10px;color:var(--muted)}.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.tag{padding:5px 8px;border-radius:999px;background:#F0F4F7;color:#607080;font-size:9px;font-weight:800}.note{font-size:12px;margin-top:8px;white-space:pre-wrap}
+.empty{padding:27px 17px;text-align:center;border:1px dashed #C9D5DF;border-radius:18px;color:var(--muted);font-size:12px;background:#FBFCFD}.empty-icon{font-size:30px;margin-bottom:7px}
+.goal{margin-bottom:9px}.goal-top{display:flex;gap:10px;justify-content:space-between}.goal b{font-size:13px}.goal small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.goalbar{height:7px;background:#EDF1F4;border-radius:99px;overflow:hidden;margin-top:10px}.goalbar span{display:block;height:100%;background:var(--teal);border-radius:99px}
+.scenario{padding:14px;border:1px solid var(--line);border-radius:17px;margin-bottom:9px}.scenario b{font-size:12px}.arrow{color:var(--teal2);font-weight:950;margin:5px 0}.response{padding:9px;border-radius:11px;background:#EFFAF8;color:var(--teal2);font-size:11px;font-weight:850}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal-head{text-align:center;font-size:8px;color:var(--muted);font-weight:950}.cal-day{aspect-ratio:1;border-radius:9px;background:#F0F3F6;display:grid;place-items:center;font-size:9px;color:var(--muted)}.cal-day.active{background:#DDF5EF;color:var(--teal2);font-weight:950}.cal-day.today{outline:2px solid var(--teal);outline-offset:1px}
+.chart{width:100%;height:210px;display:block}.badges{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.badge{padding:13px;border:1px solid var(--line);border-radius:16px}.badge.ok{background:#FBFFFC;border-color:#D7EBDD}.badge-icon{font-size:24px}.badge b{display:block;font-size:11px;margin-top:5px}.badge small{font-size:9px;color:var(--muted)}
+.bottom{position:fixed;left:0;right:0;bottom:0;height:74px;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-top:1px solid var(--line);z-index:70;display:flex;justify-content:center}.nav{width:min(720px,100%);display:grid;grid-template-columns:repeat(5,1fr)}.nav button{background:none;color:#8492A0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;font-weight:900}.nav-i{width:32px;height:28px;border-radius:10px;display:grid;place-items:center;font-size:17px}.nav button.active{color:var(--teal2)}.nav button.active .nav-i{background:#E5F7F4}.nav button.sos-nav{color:var(--danger)}.nav button.sos-nav .nav-i{background:#FFF0EF}
+.modal{position:fixed;inset:0;z-index:200;background:rgba(3,13,24,.66);display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.modal-box{width:min(650px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:27px 27px 0 0;padding:21px;animation:up .22s ease}@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}.modal-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:17px}.modal-title{font-size:18px;font-weight:950;color:var(--navy)}.close{width:37px;height:37px;border-radius:12px;background:#F0F3F6;color:var(--navy);font-size:20px}
+.toast{position:fixed;z-index:300;left:50%;bottom:87px;transform:translate(-50%,20px);background:var(--navy);color:#fff;padding:12px 16px;border-radius:13px;font-size:11px;font-weight:850;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:721px){.modal{align-items:center;padding:20px}.modal-box{border-radius:27px}}@media(max-width:720px){.c8,.c6,.c4{grid-column:span 12}.page{padding:18px 13px 30px}.hero{border-radius:24px}.title{font-size:25px}}
+
+.icon-svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-i{width:24px;height:24px;display:grid;place-items:center;margin-bottom:3px;color:currentColor}.nav-i .icon-svg{width:21px;height:21px;stroke-width:1.9}
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:90;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--line);box-shadow:0 -8px 28px rgba(7,26,47,.08)}
+.nav{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.nav button{position:relative;background:transparent;color:#8390A0;min-height:60px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:10px;font-weight:850;transition:.18s}.nav button.active{color:var(--teal2);background:#E9F8F5}.nav button.active:before{content:"";position:absolute;top:0;left:34%;right:34%;height:3px;border-radius:0 0 6px 6px;background:var(--teal)}.nav button.sos-nav{color:#9A6B69}.nav button.sos-nav.active{color:#B24A45;background:#FFF1F0}.nav button.sos-nav.active:before{background:#D9534F}
+@media(max-width:560px){.nav button{min-height:57px;border-radius:14px;font-size:9.5px}.nav-i .icon-svg{width:20px;height:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="topbar-in">
+ <div class="brand"><div class="logo">L</div><div><b>LIBÉRÉ</b><small>V2 • ÉDITION PREMIUM</small></div></div>
+ <div class="top-actions"><button class="icon" onclick="openModal('menu')">☰</button><button class="icon" onclick="go('profile')">◉</button></div>
+</div></header>
+
+<main>
+<section id="page-home" class="page active">
+ <div class="hero"><div class="hero-row"><div><div class="eyebrow" style="color:#6DE0D3">TON PARCOURS</div><h1>Bonjour <span id="homeName">à toi</span>.</h1><p id="homeObj">Avance progressivement, observe et construis tes propres stratégies.</p></div><div class="avatar" id="avatar">L</div></div>
+  <div class="hero-progress"><div class="ring"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="42"/><circle id="ring" class="fill" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"/></svg><div class="ring-value" id="pct">0%</div></div><div><strong id="dayText">Jour 1</strong><span id="daySub">Commence ton parcours aujourd’hui.</span></div></div>
+ </div>
+
+ <div class="grid">
+  <div class="c4"><div class="card stat"><div class="stat-icon">🔥</div><div class="stat-num" id="streak">0</div><div class="stat-label">jours consécutifs</div></div></div>
+  <div class="c4"><div class="card stat"><div class="stat-icon">📘</div><div class="stat-num" id="done">0/30</div><div class="stat-label">programme</div></div></div>
+  <div class="c4"><div class="card stat"><div class="stat-icon">📝</div><div class="stat-num" id="entries">0</div><div class="stat-label">entrées journal</div></div></div>
+ </div>
+
+ <div class="section">Aujourd’hui</div>
+ <div class="card"><div class="head"><div><h3 class="ct">Check-in rapide</h3><div class="cs">Comment évalues-tu la difficulté aujourd’hui ?</div></div><b id="checkStatus" style="font-size:11px">○ À faire</b></div>
+  <div class="rating-row" id="checkRatings"><button class="rating" data-v="1">1</button><button class="rating" data-v="2">2</button><button class="rating" data-v="3">3</button><button class="rating" data-v="4">4</button><button class="rating" data-v="5">5</button></div>
+  <button class="btn primary block" style="margin-top:12px" onclick="checkIn()">✓ Enregistrer</button>
+ </div>
+
+ <div class="section">Accès rapide</div>
+ <div class="grid">
+  <div class="c6"><div class="card quick"><div class="quick-icon">🆘</div><div class="quick-copy"><b>Besoin d’aide maintenant ?</b><span>Ouvre ton protocole SOS personnalisé.</span></div><button class="btn dark small" onclick="go('sos')">SOS</button></div></div>
+  <div class="c6"><div class="card quick"><div class="quick-icon">🧭</div><div class="quick-copy"><b>Une difficulté ?</b><span>Enregistre ce qui s’est passé sans jugement.</span></div><button class="btn outline small" onclick="openModal('difficulty')">Noter</button></div></div>
+ </div>
+
+ <div class="section">Ton plan personnel</div>
+ <div class="card" id="homePlan"></div>
+ <div class="section">Prochaine étape</div>
+ <div class="card" id="nextStep"></div>
+</section>
+
+<section id="page-program" class="page">
+ <div class="eyebrow">PARCOURS</div><h2 class="title">Programme 30 jours</h2><p class="subtitle">Une progression structurée, avec une seule étape active à la fois.</p>
+ <div class="card" style="margin-top:18px"><div class="head"><div><h3 class="ct">Progression</h3><div class="cs"><span id="pdone">0</span> journées terminées</div></div><b id="ppct">0%</b></div><div class="progress"><span id="pbar" style="width:0%"></span></div></div>
+ <div class="section">Ton parcours</div><div id="programList"></div>
+</section>
+
+<section id="page-sos" class="page">
+ <div class="eyebrow">ASSISTANCE PERSONNELLE</div><h2 class="title">SOS</h2><p class="subtitle">Traverse le moment présent sans avoir à résoudre toute ta situation.</p>
+ <div class="sos" style="margin-top:18px"><div class="orb"><span>🫶</span></div><div class="eyebrow" style="color:#6DE0D3">REPRENDS LE MOMENT</div><div class="timer" id="timer">05:00</div><p id="sosMsg">Respire. Éloigne-toi du déclencheur et concentre-toi sur la prochaine minute.</p><button id="sosBtn" class="btn primary" onclick="startSOS()">▶ Commencer</button><button class="btn outline" style="margin-left:5px" onclick="resetSOS()">Réinitialiser</button></div>
+ <div class="section">Protocole en 3 temps</div><div class="grid"><div class="c4"><div class="card"><div style="font-size:25px">①</div><h3 class="ct" style="margin-top:7px">Pause</h3><p class="cs">Éloigne-toi quelques instants du déclencheur.</p></div></div><div class="c4"><div class="card"><div style="font-size:25px">②</div><h3 class="ct" style="margin-top:7px">Respire</h3><p class="cs">Ralentis volontairement pendant quelques respirations.</p></div></div><div class="c4"><div class="card"><div style="font-size:25px">③</div><h3 class="ct" style="margin-top:7px">Agis</h3><p class="cs">Passe à une action concrète préparée dans ton plan.</p></div></div></div>
+ <div class="section">Mon plan SOS</div><div class="card" id="sosPlan"></div>
+</section>
+
+<section id="page-journal" class="page">
+ <div class="eyebrow">OBSERVATION</div><h2 class="title">Journal</h2><p class="subtitle">Note ce que tu observes. Les données restent sur cet appareil.</p>
+ <div class="card" style="margin-top:18px">
+  <div class="head"><div><h3 class="ct">Nouvelle entrée</h3><div class="cs">Une entrée peut rester très courte.</div></div></div>
+  <div class="field"><label>État</label><div class="chips" id="moods"></div></div>
+  <div class="field"><label>Intensité 1–5</label><div class="rating-row" id="urge"><button class="rating" data-v="1">1</button><button class="rating" data-v="2">2</button><button class="rating" data-v="3">3</button><button class="rating" data-v="4">4</button><button class="rating" data-v="5">5</button></div></div>
+  <div class="field"><label>Déclencheur</label><div class="chips" id="triggers"></div></div>
+  <div class="field"><label>Stratégie utilisée</label><div class="chips" id="strategies"></div></div>
+  <div class="field"><label>Note</label><textarea id="note" class="textarea" maxlength="1000" placeholder="Ce que tu remarques aujourd’hui..."></textarea></div>
+  <button class="btn primary block" onclick="addJournal()">Enregistrer l’entrée</button>
+ </div>
+ <div class="section">Historique</div><div class="card"><input id="search" class="input" placeholder="Rechercher..." oninput="renderJournal()" style="margin-bottom:13px"><div id="journalList"></div></div>
+</section>
+
+<section id="page-bilan" class="page">
+ <div class="eyebrow">VUE D’ENSEMBLE</div><h2 class="title">Bilan</h2><p class="subtitle">Des indicateurs locaux pour observer ton parcours, pas pour poser un diagnostic.</p>
+ <div class="grid" style="margin-top:18px"><div class="c4"><div class="card stat"><div class="stat-icon">📈</div><div class="stat-num" id="bpct">0%</div><div class="stat-label">progression</div></div></div><div class="c4"><div class="card stat"><div class="stat-icon">🏆</div><div class="stat-num" id="best">0</div><div class="stat-label">meilleur enchaînement</div></div></div><div class="c4"><div class="card stat"><div class="stat-icon">🧭</div><div class="stat-num" id="diffs">0</div><div class="stat-label">difficultés notées</div></div></div></div>
+ <div class="section">Évolution</div><div class="card"><div id="chart"></div><div class="cs">Historique des intensités saisies dans le journal.</div></div>
+ <div class="section">Calendrier</div><div class="card"><div class="calendar" id="calendar"></div></div>
+ <div class="section">Observations locales</div><div class="card" id="insights"></div>
+ <div class="section">Accomplissements</div><div class="card"><div class="badges" id="badges"></div></div>
+</section>
+
+<section id="page-goals" class="page">
+ <div class="eyebrow">CONSTRUCTION</div><h2 class="title">Mes objectifs</h2><p class="subtitle">Transforme tes intentions en petites actions concrètes.</p>
+ <div class="card" style="margin-top:18px"><div class="field"><label>Objectif</label><input id="goalTitle" class="input" maxlength="100" placeholder="Ex. Marcher 20 minutes"></div><div class="field"><label>Type</label><select id="goalType" class="select"><option value="daily">Quotidien</option><option value="weekly">Hebdomadaire</option><option value="personal">Personnel</option></select></div><button class="btn primary block" onclick="addGoal()">+ Ajouter</button></div>
+ <div class="section">Objectifs actifs</div><div id="goalList"></div>
+</section>
+
+<section id="page-plan" class="page">
+ <div class="eyebrow">PRÉPARATION</div><h2 class="title">Mon plan personnel</h2><p class="subtitle">Prépare tes réponses avant les moments difficiles.</p>
+ <div class="card" style="margin-top:18px">
+  <div class="field"><label>Déclencheurs principaux</label><div class="chips" id="planTriggers"></div></div>
+  <div class="field"><label>Signes d’alerte</label><textarea id="warnings" class="textarea" placeholder="Ex. Je m’isole, je reste longtemps sur mon téléphone..."></textarea></div>
+  <div class="field"><label>Actions immédiates</label><div class="chips" id="planActions"></div></div>
+  <div class="field"><label>Environnements favorables</label><textarea id="environments" class="textarea" placeholder="Ex. extérieur, salon, lieu public..."></textarea></div>
+  <div class="field"><label>Personnes / ressources de soutien</label><textarea id="support" class="textarea" placeholder="Personnes ou ressources auxquelles tu peux faire appel."></textarea></div>
+  <div class="field"><label>Mon plan « Si… alors… »</label><textarea id="statement" class="textarea" placeholder="Si une situation difficile arrive, alors..."></textarea></div>
+  <button class="btn primary block" onclick="savePlan()">Enregistrer mon plan</button>
+ </div>
+ <div class="section">Scénarios personnalisés</div><div id="scenarios"></div>
+</section>
+
+<section id="page-profile" class="page">
+ <div class="eyebrow">PERSONNALISATION</div><h2 class="title">Mon espace</h2><p class="subtitle">Profil, sauvegarde et confidentialité.</p>
+ <div class="card" style="margin-top:18px"><div class="field"><label>Nom affiché</label><input id="pname" class="input" maxlength="80" placeholder="Ex. Basile"></div><div class="field"><label>Mon objectif</label><textarea id="pobjective" class="textarea" maxlength="300" placeholder="Pourquoi veux-tu avancer ?"></textarea></div><button class="btn primary block" onclick="saveProfile()">Enregistrer</button></div>
+ <div class="section">Accès personnel</div><div class="grid"><div class="c6"><div class="card"><div class="quick"><div class="quick-icon">🎯</div><div class="quick-copy"><b>Objectifs</b><span>Suivre tes actions.</span></div><button class="btn outline small" onclick="go('goals')">Ouvrir</button></div></div></div><div class="c6"><div class="card"><div class="quick"><div class="quick-icon">🛡️</div><div class="quick-copy"><b>Plan personnel</b><span>Préparer tes réponses.</span></div><button class="btn outline small" onclick="go('plan')">Ouvrir</button></div></div></div></div>
+ <div class="section">Données & confidentialité</div><div class="card"><div id="storage"></div><div style="display:grid;gap:8px;margin-top:13px"><button class="btn outline block" onclick="exportData()">💾 Exporter mes données</button><label class="btn outline block">📥 Importer une sauvegarde<input type="file" accept=".json,application/json" style="display:none" onchange="importData(event)"></label><button class="btn danger block" onclick="resetData()">🗑️ Supprimer mes données</button></div></div>
+ <div class="section">À propos de LIBÉRÉ</div><div class="card"><b style="color:var(--navy)">LIBÉRÉ V2.1 • ÉDITION PREMIUM</b><p class="cs">Application locale d’observation, d’organisation et de changement progressif des habitudes.</p><div style="margin-top:12px;padding:12px;border-radius:13px;background:#F7F9FB;color:var(--muted);font-size:10px">LIBÉRÉ ne remplace pas un professionnel de santé. En cas de détresse importante ou de perte persistante de contrôle, une aide professionnelle peut être appropriée.</div></div>
+</section>
+</main>
+
+<nav class="bottom" aria-label="Navigation principale"><div class="nav">
+ <button class="active" data-page="home" onclick="go('home')"><span class="nav-i" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8"/><path d="M5.5 9.5V21h13V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>Accueil</button>
+ <button data-page="program" onclick="go('program')"><span class="nav-i" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 8h8M8 12h5M8 16h3"/><path d="m15 15 1.6 1.6L20 13.2"/></svg></span>Programme</button>
+ <button class="sos-nav" data-page="sos" onclick="go('sos')"><span class="nav-i" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21s7-4.2 7-10.2A7 7 0 0 0 5 10.8C5 16.8 12 21 12 21Z"/><path d="m13.2 6.8-3 5h2.6l-1 5 3.1-5h-2.5l.8-5Z"/></svg></span>SOS</button>
+ <button data-page="journal" onclick="go('journal')"><span class="nav-i" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 3.5h10.5A2.5 2.5 0 0 1 19 6v14.5H7A3 3 0 0 1 4 17.5V6.5a3 3 0 0 1 3-3Z"/><path d="M7 20.5h10"/><path d="M8 8h7M8 11.5h7M8 15h5"/></svg></span>Journal</button>
+ <button data-page="bilan" onclick="go('bilan')"><span class="nav-i" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5V4.5M4 19.5h17"/><path d="m7 16 3.2-4 3 2 4.8-6"/><path d="M18 8h-3M18 8v3"/></svg></span>Bilan</button>
+</div></nav>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal-menu" class="modal" onclick="if(event.target===this)closeModal('menu')"><div class="modal-box"><div class="modal-head"><div class="modal-title">LIBÉRÉ</div><button class="close" onclick="closeModal('menu')">×</button></div><div style="display:grid;gap:8px"><button class="btn outline block" onclick="closeModal('menu');go('goals')"><span class="nav-i"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/></svg></span>Mes objectifs</button><button class="btn outline block" onclick="closeModal('menu');go('plan')"><span class="nav-i"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 21s7-3.8 7-10V5l-7-2-7 2v6c0 6.2 7 10 7 10Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span>Mon plan</button><button class="btn outline block" onclick="closeModal('menu');go('profile')"><span class="nav-i"><svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/></svg></span>Mon espace</button><button class="btn outline block" onclick="closeModal('menu');go('bilan')"><span class="nav-i"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M4 19.5V4.5M4 19.5h17"/><path d="m7 16 3.2-4 3 2 4.8-6"/></svg></span>Mon bilan</button></div></div></div>
+
+<div id="modal-difficulty" class="modal" onclick="if(event.target===this)closeModal('difficulty')"><div class="modal-box"><div class="modal-head"><div><div class="modal-title">J’ai eu une difficulté</div><div class="cs">Observe la situation sans te juger.</div></div><button class="close" onclick="closeModal('difficulty')">×</button></div>
+<div class="field"><label>Type</label><div class="chips" id="dType"></div></div><div class="field"><label>Déclencheur</label><div class="chips" id="dTrigger"></div></div><div class="field"><label>État émotionnel</label><div class="chips" id="dMood"></div></div><div class="field"><label>Action immédiate</label><div class="chips" id="dAction"></div></div><div class="field"><label>Note</label><textarea id="dNote" class="textarea" maxlength="1000" placeholder="Ce que tu as remarqué..."></textarea></div><button class="btn primary block" onclick="saveDifficulty()">Enregistrer</button>
+</div></div>
+
+<script>
+const APP="2.1";
+const PROGRAM=[
+["Comprendre son point de départ","Observe ta situation actuelle sans jugement."],
+["Identifier les déclencheurs","Observe les situations qui précèdent généralement une envie."],
+["Observer l’envie","Apprends à observer une envie sans agir immédiatement."],
+["Changer d’environnement","Découvre comment ton environnement influence tes habitudes."],
+["Réduire les déclencheurs numériques","Identifie les contenus et usages qui favorisent les envies."],
+["Construire une alternative","Prépare une activité simple à utiliser lorsque l’envie apparaît."],
+["Bilan de la première semaine","Observe ce que tu as appris durant tes sept premiers jours."],
+["Mieux gérer l’ennui","Construis des alternatives concrètes aux moments d’ennui."],
+["Mieux gérer le stress","Identifie des façons adaptées de traverser les périodes de stress."],
+["Améliorer ton sommeil","Observe ton rythme et tes moments à risque."],
+["Bouger davantage","Introduis davantage de mouvement dans ta journée."],
+["Identifier les moments à risque","Repère les périodes où tu es le plus vulnérable."],
+["Préparer ton plan SOS","Construis ton propre plan pour les moments difficiles."],
+["Deuxième bilan","Fais le point sur ton évolution."],
+["Renforcer une nouvelle routine","Choisis une habitude constructive à renforcer."],
+["Apprendre à différer","Laisse passer du temps avant de réagir à une envie."],
+["Renforcer ton environnement","Rends ton environnement favorable à tes objectifs."],
+["Développer une activité personnelle","Consacre du temps à une activité qui compte."],
+["Sortir de l’isolement","Réfléchis aux relations et activités qui peuvent t’aider."],
+["Faire face à une journée difficile","Prépare une stratégie réaliste pour les journées compliquées."],
+["Troisième bilan","Observe le chemin parcouru."],
+["Renforcer la discipline quotidienne","Travaille sur de petites actions régulières."],
+["Observer les pensées automatiques","Observe les pensées qui peuvent précéder une envie."],
+["Créer une routine du soir","Construis une fin de journée plus structurée."],
+["Renforcer tes objectifs personnels","Reconnecte-toi à ce que tu souhaites construire."],
+["Préparer l’après-programme","Réfléchis à ce que tu veux conserver."],
+["Ton plan personnel","Construis un plan adapté à tes situations."],
+["Regarder le chemin parcouru","Observe tes changements et apprentissages."],
+["Préparer la suite","Définis les habitudes que tu veux continuer."],
+["Construire la suite","Termine le programme en construisant ton propre parcours."]
+];
+const MOODS=["Très difficile","Difficile","Neutre","Bien","Très bien"];
+const TRIGGERS=["Ennui","Stress","Solitude","Téléphone","Contenu numérique","Fatigue","Habitude","Autre"];
+const STRATEGIES=["Changer d’environnement","Utiliser le SOS","Marcher / activité","Éviter le déclencheur","Parler à quelqu’un","Attendre"];
+const DTYPE=["Envie forte","Difficulté","Écart","Autre"];
+const EMOTIONS=["Stressé","Seul","Fatigué","Ennuyé","Triste","Neutre","Autre"];
+const DACTIONS=["Changer d’environnement","Utiliser le SOS","Marcher / bouger","Éviter le déclencheur","Parler à quelqu’un","Attendre","Je n’ai rien fait"];
+
+function read(k,f){try{let v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch(e){return f}}
+function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function uid(){return Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,7)}
+function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function timeKey(){return new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"})}
+function esc(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function toast(s){let e=document.getElementById("toast");e.textContent=s;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2500)}
+function initials(n){if(!n)return"L";let p=n.trim().split(/\s+/);return(p.length>1?p[0][0]+p[p.length-1][0]:p[0].slice(0,2)).toUpperCase()}
+
+function profile(){return read("libere_profile",null)}
+function saveProfile(){let p={name:document.getElementById("pname").value.trim(),objective:document.getElementById("pobjective").value.trim(),updatedAt:new Date().toISOString()};write("libere_profile",p);toast("Profil enregistré.");render()}
+function loadProfile(){let p=profile()||{};document.getElementById("pname").value=p.name||"";document.getElementById("pobjective").value=p.objective||"";document.getElementById("homeName").textContent=p.name||"à toi";document.getElementById("homeObj").textContent=p.objective||"Avance progressivement, observe et construis tes propres stratégies.";document.getElementById("avatar").textContent=initials(p.name)}
+
+function program(){let p=read("libere_program",null);if(!p||typeof p!=="object")p={completed:[]};if(!Array.isArray(p.completed))p.completed=[];return p}
+function completed(){return [...new Set(program().completed.map(Number).filter(x=>x>=1&&x<=30))].sort((a,b)=>a-b)}
+function currentDay(){let c=completed(),n=1;for(let i=1;i<=30;i++){if(c.includes(i))n=i+1;else break}return Math.min(n,30)}
+function percent(){return Math.round(completed().length/30*100)}
+function finishDay(n){if(n!==currentDay()){toast(n<currentDay()?"Cette journée est déjà terminée.":"Cette journée est verrouillée.");return}let p=program();if(!p.completed.includes(n))p.completed.push(n);write("libere_program",p);toast(n===30?"🎉 Programme terminé.":"✓ Journée terminée.");render()}
+function renderProgram(){let c=completed(),cur=currentDay();document.getElementById("pdone").textContent=c.length;document.getElementById("ppct").textContent=percent()+"%";document.getElementById("pbar").style.width=percent()+"%";document.getElementById("programList").innerHTML=PROGRAM.map((x,i)=>{let d=i+1,done=c.includes(d),now=!done&&d===cur,lock=!done&&!now;return `<div class="card day ${done?"done":""} ${now?"current":""} ${lock?"lock":""}"><div class="day-row"><div class="day-num">${done?"✓":d}</div><div class="day-info"><div class="day-title">${esc(x[0])}</div><div class="day-desc">${esc(x[1])}</div><div class="status ${done?"s-done":now?"s-current":"s-lock"}">${done?"✓ Terminé":now?"● Étape actuelle":"🔒 Verrouillé"}</div></div>${now?`<button class="btn primary small" onclick="finishDay(${d})">Terminer</button>`:done?`<button class="btn outline small" onclick="showDay(${d})">Revoir</button>`:""}</div></div>`}).join("")}
+function showDay(n){let x=PROGRAM[n-1];customModal(`Jour ${n} — ${x[0]}`,`<p class="cs" style="font-size:13px">${esc(x[1])}</p><div style="margin-top:14px;padding:12px;border-radius:13px;background:#EFFAF8;color:var(--teal2);font-size:11px;font-weight:850">Prends quelques minutes pour réfléchir à ce que cette étape signifie concrètement pour toi.</div>`)}
+
+function tracking(){let x=read("libere_tracking",null);if(!x||typeof x!=="object")x={days:{}};if(!x.days)x.days={};return x}
+function checkIn(){let s=document.querySelector("#checkRatings .on");if(!s){toast("Choisis un niveau.");return}let t=tracking(),k=dateKey();t.days[k]={...(t.days[k]||{}),checked:true,rating:Number(s.dataset.v),createdAt:new Date().toISOString()};write("libere_tracking",t);toast("Check-in enregistré.");render()}
+function tracked(){return Object.keys(tracking().days||{})}
+function streak(){let set=new Set(tracked()),d=new Date(),n=0;while(set.has(dateKey(d))){n++;d.setDate(d.getDate()-1)}return n}
+function bestStreak(){let a=tracked().sort(),best=0,n=0,prev=null;a.forEach(k=>{if(!prev)n=1;else{let d=(new Date(k)-new Date(prev))/86400000;n=d===1?n+1:1}best=Math.max(best,n);prev=k});return best}
+
+function setupChips(id,arr,selected=[]){let e=document.getElementById(id);if(!e)return;e.innerHTML=arr.map(x=>`<button class="chip ${selected.includes(x)?"on":""}" data-x="${esc(x)}">${esc(x)}</button>`).join("");e.querySelectorAll(".chip").forEach(b=>b.onclick=()=>b.classList.toggle("on"))}
+function selected(id){return [...document.querySelectorAll(`#${id} .chip.on`)].map(x=>x.textContent)}
+function one(id){return document.querySelector(`#${id} .chip.on`)?.textContent||""}
+
+function journals(){return read("libere_journal_entries",[])}
+function addJournal(){let mood=one("moods"),u=document.querySelector("#urge .on")?.dataset.v,tr=one("triggers"),st=one("strategies"),note=document.getElementById("note").value.trim();if(!mood||!u){toast("Choisis ton état et ton intensité.");return}let a=journals();a.unshift({id:uid(),date:dateKey(),time:timeKey(),mood,urge:Number(u),trigger:tr,strategy:st,note,createdAt:new Date().toISOString()});write("libere_journal_entries",a.slice(0,1000));let t=tracking();t.days[dateKey()]={...(t.days[dateKey()]||{}),checked:true,fromJournal:true};write("libere_tracking",t);document.getElementById("note").value="";document.querySelectorAll("#moods .on,#triggers .on,#strategies .on,#urge .on").forEach(x=>x.classList.remove("on"));toast("Entrée enregistrée.");render()}
+function delJournal(id){if(!confirm("Supprimer cette entrée ?"))return;write("libere_journal_entries",journals().filter(x=>x.id!==id));renderJournal();toast("Entrée supprimée.")}
+function renderJournal(){let q=(document.getElementById("search")?.value||"").toLowerCase(),a=journals().filter(x=>!q||JSON.stringify(x).toLowerCase().includes(q)),e=document.getElementById("journalList");if(!a.length){e.innerHTML=`<div class="empty"><div class="empty-icon">📓</div>Aucune entrée trouvée.</div>`;return}e.innerHTML=a.map(x=>`<div class="item"><div class="item-top"><b>${esc(x.mood)}</b><span class="date">${esc(x.date)} • ${esc(x.time||"")}</span></div><div class="tags"><span class="tag">Intensité ${x.urge}/5</span>${x.trigger?`<span class="tag">${esc(x.trigger)}</span>`:""}${x.strategy?`<span class="tag">${esc(x.strategy)}</span>`:""}</div>${x.note?`<div class="note">${esc(x.note)}</div>`:""}<div style="text-align:right;margin-top:9px"><button class="btn danger small" onclick="delJournal('${x.id}')">Supprimer</button></div></div>`).join("")}
+
+function difficulties(){return read("libere_recovery_events",[])}
+function openDifficulty(){setupChips("dType",DTYPE);setupChips("dTrigger",TRIGGERS);setupChips("dMood",EMOTIONS);setupChips("dAction",DACTIONS);document.getElementById("dNote").value="";document.getElementById("modal-difficulty").classList.add("show")}
+function saveDifficulty(){let type=one("dType"),trigger=one("dTrigger"),mood=one("dMood"),action=one("dAction"),note=document.getElementById("dNote").value.trim();if(!type){toast("Choisis le type.");return}let a=difficulties();a.unshift({id:uid(),date:dateKey(),time:timeKey(),type,trigger,mood,immediateAction:action,note,createdAt:new Date().toISOString()});write("libere_recovery_events",a.slice(0,1000));closeModal("difficulty");toast("Difficulté enregistrée.");render()}
+
+function goals(){return read("libere_goals",[])}
+function addGoal(){let title=document.getElementById("goalTitle").value.trim(),type=document.getElementById("goalType").value;if(!title){toast("Écris ton objectif.");return}let a=goals();a.push({id:uid(),title,type,progress:0,target:type==="weekly"?7:1,createdAt:new Date().toISOString()});write("libere_goals",a);document.getElementById("goalTitle").value="";toast("Objectif ajouté.");render()}
+function incGoal(id){let a=goals(),g=a.find(x=>x.id===id);if(!g)return;g.progress=Math.min(g.target,(g.progress||0)+1);write("libere_goals",a);toast(g.progress>=g.target?"🎯 Objectif atteint.":"Progression enregistrée.");render()}
+function delGoal(id){if(confirm("Supprimer cet objectif ?")){write("libere_goals",goals().filter(x=>x.id!==id));render()}}
+function renderGoals(){let a=goals(),e=document.getElementById("goalList");if(!a.length){e.innerHTML=`<div class="empty"><div class="empty-icon">🎯</div>Aucun objectif actif.</div>`;return}e.innerHTML=a.map(g=>{let p=Math.min(100,Math.round((g.progress||0)/Math.max(1,g.target)*100));return `<div class="card goal"><div class="goal-top"><div><b>${esc(g.title)}</b><small>${g.type==="daily"?"Quotidien":g.type==="weekly"?"Hebdomadaire":"Personnel"} • ${g.progress}/${g.target}</small></div><button class="btn primary small" onclick="incGoal('${g.id}')">+1</button></div><div class="goalbar"><span style="width:${p}%"></span></div><div style="text-align:right;margin-top:8px"><button class="btn danger small" onclick="delGoal('${g.id}')">Supprimer</button></div></div>`}).join("")}
+
+function plan(){return read("libere_personal_plan",{triggers:[],actions:[],warnings:"",environments:"",support:"",statement:""})}
+function savePlan(){let p={triggers:selected("planTriggers"),actions:selected("planActions"),warnings:document.getElementById("warnings").value.trim(),environments:document.getElementById("environments").value.trim(),support:document.getElementById("support").value.trim(),statement:document.getElementById("statement").value.trim(),updatedAt:new Date().toISOString()};write("libere_personal_plan",p);toast("Plan enregistré.");render()}
+function renderPlan(){let p=plan();setupChips("planTriggers",TRIGGERS,p.triggers||[]);setupChips("planActions",STRATEGIES,p.actions||[]);document.getElementById("warnings").value=p.warnings||"";document.getElementById("environments").value=p.environments||"";document.getElementById("support").value=p.support||"";document.getElementById("statement").value=p.statement||"";let e=document.getElementById("scenarios");if(!p.triggers?.length||!p.actions?.length){e.innerHTML=`<div class="empty"><div class="empty-icon">🛡️</div>Sélectionne des déclencheurs et des actions pour créer tes scénarios.</div>`;return}e.innerHTML=p.triggers.map((x,i)=>`<div class="scenario"><b>Quand je rencontre : ${esc(x)}</b><div class="arrow">↓</div><div class="response">Je choisis : ${esc(p.actions[i%p.actions.length])}</div></div>`).join("")}
+
+function renderHome(){let p=percent(),c=completed(),d=currentDay(),pr=profile()||{};document.getElementById("pct").textContent=p+"%";document.getElementById("ring").style.strokeDashoffset=263.9-(263.9*p/100);document.getElementById("dayText").textContent=c.length===30?"Programme terminé":"Jour "+d;document.getElementById("daySub").textContent=c.length===30?"Construis maintenant la suite de ton parcours.":PROGRAM[d-1][0];document.getElementById("streak").textContent=streak();document.getElementById("done").textContent=c.length+"/30";document.getElementById("entries").textContent=journals().length;let p1=plan();document.getElementById("homePlan").innerHTML=p1.triggers?.length?`<div class="tags">${p1.triggers.slice(0,4).map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</div><div class="cs" style="margin-top:10px">${p1.actions?.length?"Des réponses sont prêtes dans ton plan.":"Ajoute des actions à ton plan."}</div><button class="btn outline block" style="margin-top:11px" onclick="go('plan')">Gérer mon plan</button>`:`<div class="empty">Ton plan personnel n’est pas encore configuré.<br><button class="btn outline small" style="margin-top:10px" onclick="go('plan')">Configurer</button></div>`;let x=PROGRAM[d-1];document.getElementById("nextStep").innerHTML=c.length===30?`<div class="quick"><div class="quick-icon">🏆</div><div class="quick-copy"><b>30 jours terminés</b><span>Utilise ton bilan pour décider ce que tu souhaites continuer.</span></div></div>`:`<div class="quick"><div class="day-num" style="background:var(--teal);color:#fff">${d}</div><div class="quick-copy"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div><button class="btn primary small" onclick="go('program')">Ouvrir</button></div>`}
+function renderSOS(){let p=plan(),e=document.getElementById("sosPlan");e.innerHTML=p.actions?.length?`<div style="display:grid;gap:7px">${p.actions.map((x,i)=>`<div class="response">${i+1}. ${esc(x)}</div>`).join("")}</div>`:`<div class="empty">Ton plan SOS personnalisé n’est pas encore configuré.<br><button class="btn outline small" style="margin-top:10px" onclick="go('plan')">Configurer</button></div>`}
+
+function renderChart(){let a=journals().filter(x=>x.urge).slice(0,14).reverse(),e=document.getElementById("chart");if(a.length<2){e.innerHTML=`<div class="empty">Ajoute au moins deux entrées avec une intensité pour afficher une évolution.</div>`;return}let W=700,H=210,P=30,uw=W-2*P,uh=H-2*P,pts=a.map((x,i)=>({x:P+i/(a.length-1)*uw,y:H-P-(x.urge-1)/4*uh,v:x.urge}));e.innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${[1,2,3,4,5].map(n=>{let y=H-P-(n-1)/4*uh;return `<line x1="${P}" y1="${y}" x2="${W-P}" y2="${y}" stroke="#E8EDF2"/><text x="8" y="${y+4}" font-size="10" fill="#718096">${n}</text>`}).join("")}<polyline points="${pts.map(p=>p.x+","+p.y).join(" ")}" fill="none" stroke="#12B8A6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>${pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="5" fill="#fff" stroke="#12B8A6" stroke-width="3"/>`).join("")}</svg>`}
+function renderCalendar(){let e=document.getElementById("calendar"),h=["L","M","M","J","V","S","D"].map(x=>`<div class="cal-head">${x}</div>`).join(""),d=new Date(),y=d.getFullYear(),m=d.getMonth(),start=new Date(y,m,1).getDay();start=start===0?6:start-1;let days=new Date(y,m+1,0).getDate(),t=tracking().days;for(let i=0;i<start;i++)h+="<div></div>";for(let n=1;n<=days;n++){let k=dateKey(new Date(y,m,n));h+=`<div class="cal-day ${t[k]?"active":""} ${k===dateKey()?"today":""}">${n}</div>`}e.innerHTML=h}
+function counts(a,k){let m={};a.forEach(x=>{if(x[k])m[x[k]]=(m[x[k]]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+function renderInsights(){let j=journals(),d=difficulties(),a=[],t=counts(j,"trigger"),s=counts(j,"strategy"),m=counts(j,"mood"),dt=counts(d,"trigger");if(t[0])a.push(`<div class="scenario"><b>Déclencheur le plus noté</b><div class="response" style="margin-top:7px">${esc(t[0][0])} • ${t[0][1]} fois</div></div>`);if(dt[0])a.push(`<div class="scenario"><b>Déclencheur associé aux difficultés</b><div class="response" style="margin-top:7px">${esc(dt[0][0])} • ${dt[0][1]} fois</div></div>`);if(s[0])a.push(`<div class="scenario"><b>Stratégie la plus utilisée</b><div class="response" style="margin-top:7px">${esc(s[0][0])} • ${s[0][1]} fois</div></div>`);if(m[0])a.push(`<div class="scenario"><b>État le plus renseigné</b><div class="response" style="margin-top:7px">${esc(m[0][0])} • ${m[0][1]} fois</div></div>`);document.getElementById("insights").innerHTML=a.length?a.join(""):`<div class="empty">Continue à utiliser le journal pour faire apparaître des tendances personnelles.</div>`}
+function renderBadges(){let c=completed(),n=tracked().length,b=bestStreak(),j=journals(),a=[["🌱","Première présence","1 jour suivi",n>=1],["🔥","3 jours","3 jours suivis",n>=3],["📅","Une semaine","7 jours suivis",n>=7],["⭐","Deux semaines","14 jours suivis",n>=14],["🏆","30 jours","30 jours suivis",n>=30],["📘","Premier chapitre","7 jours programme",c.length>=7],["🎯","Mi-parcours","15 jours programme",c.length>=15],["🚀","Programme terminé","30 jours programme",c.length>=30],["💪","Régularité","7 jours consécutifs",b>=7],["📝","Premier journal","1 entrée",j.length>=1]];document.getElementById("badges").innerHTML=a.map(x=>`<div class="badge ${x[3]?"ok":""}"><div class="badge-icon">${x[0]}</div><b>${x[1]}</b><small>${x[2]} • ${x[3]?"Débloqué":"À débloquer"}</small></div>`).join("")}
+function renderBilan(){document.getElementById("bpct").textContent=percent()+"%";document.getElementById("best").textContent=bestStreak();document.getElementById("diffs").textContent=difficulties().length;renderChart();renderCalendar();renderInsights();renderBadges()}
+
+function storageInfo(){let keys=[],bytes=0;for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k?.startsWith("libere_")){keys.push(k);bytes+=k.length+(localStorage.getItem(k)||"").length}}return {keys,bytes}}
+function renderStorage(){let s=storageInfo();document.getElementById("storage").innerHTML=`<div class="grid"><div class="c6"><div style="padding:13px;background:#F5F8FA;border-radius:14px"><b style="font-size:20px">${s.keys.length}</b><div class="cs">espaces de données</div></div></div><div class="c6"><div style="padding:13px;background:#F5F8FA;border-radius:14px"><b style="font-size:20px">${(s.bytes/1024).toFixed(1)} Ko</b><div class="cs">données approximatives</div></div></div></div><div style="margin-top:11px;padding:11px;border-radius:12px;background:#EAF8F5;color:var(--teal2);font-size:10px;font-weight:850">✓ Données LIBÉRÉ conservées localement sur cet appareil.</div>`}
+function exportData(){let data={app:"LIBÉRÉ",version:APP,exportedAt:new Date().toISOString(),localStorage:{}};for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k?.startsWith("libere_"))data.localStorage[k]=localStorage.getItem(k)}let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=`libere-v2-sauvegarde-${dateKey()}.json`;a.click();URL.revokeObjectURL(u);toast("Sauvegarde exportée.")}
+function importData(ev){let f=ev.target.files?.[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(d.app!=="LIBÉRÉ"||!d.localStorage)throw 0;if(!confirm("Importer cette sauvegarde remplacera les données LIBÉRÉ actuelles. Continuer ?"))return;Object.keys(d.localStorage).filter(k=>k.startsWith("libere_")).forEach(k=>localStorage.setItem(k,d.localStorage[k]));toast("Sauvegarde importée.");setTimeout(()=>location.reload(),600)}catch(e){toast("Fichier invalide.")}};r.readAsText(f)}
+function resetData(){if(!confirm("Supprimer toutes les données LIBÉRÉ de cet appareil ?"))return;if(!confirm("Dernière confirmation : cette action est irréversible."))return;let ks=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k?.startsWith("libere_"))ks.push(k)}ks.forEach(k=>localStorage.removeItem(k));location.reload()}
+
+let seconds=300,interval=null;
+function startSOS(){if(interval)return;document.getElementById("sosBtn").textContent="⏸ Session en cours";document.getElementById("sosMsg").textContent="Respire lentement. Ne prends aucune décision impulsive maintenant. Concentre-toi sur la prochaine minute.";interval=setInterval(()=>{seconds--;if(seconds<=0){resetSOS();toast("Session terminée.");return}renderTimer()},1000)}
+function resetSOS(){clearInterval(interval);interval=null;seconds=300;renderTimer();document.getElementById("sosBtn").textContent="▶ Commencer";document.getElementById("sosMsg").textContent="Respire. Éloigne-toi du déclencheur et concentre-toi sur la prochaine minute."}
+function renderTimer(){document.getElementById("timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
+
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById("page-"+page)?.classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});render()}
+function openModal(n){if(n==="difficulty"){openDifficulty();return}else document.getElementById("modal-"+n)?.classList.add("show")}
+function closeModal(n){document.getElementById("modal-"+n)?.classList.remove("show")}
+function customModal(title,content){let m=document.getElementById("custom");if(!m){m=document.createElement("div");m.id="custom";m.className="modal";m.innerHTML=`<div class="modal-box"><div class="modal-head"><div class="modal-title" id="customTitle"></div><button class="close" onclick="closeCustom()">×</button></div><div id="customContent"></div></div>`;document.body.appendChild(m)}document.getElementById("customTitle").textContent=title;document.getElementById("customContent").innerHTML=content;m.classList.add("show")}
+function closeCustom(){document.getElementById("custom")?.classList.remove("show")}
+
+function render(){loadProfile();renderHome();renderProgram();renderJournal();renderGoals();renderPlan();renderSOS();renderBilan();renderStorage();let done=tracking().days[dateKey()];document.getElementById("checkStatus").textContent=done?"✓ Enregistré":"○ À faire"}
+
+document.addEventListener("DOMContentLoaded",()=>{
+ setupChips("moods",MOODS);setupChips("triggers",TRIGGERS);setupChips("strategies",STRATEGIES);
+ document.querySelectorAll(".rating").forEach(b=>b.onclick=()=>{let row=b.parentElement;row.querySelectorAll(".rating").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
+ render();
+});
+</script>
+</body>
+</html>
+
